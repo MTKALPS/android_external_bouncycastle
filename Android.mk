@@ -45,6 +45,22 @@ ifneq ($(TARGET_BUILD_PDK),true)
     LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/Android.mk
     include $(BUILD_JAVA_LIBRARY)
 
+    ifeq ($(strip $(BUILD_MTK_API_DEP)), yes)
+    # bouncycastle API table.
+    # ============================================================
+    LOCAL_MODULE := bouncycastle-api
+    
+    LOCAL_JAVA_LIBRARIES += $(LOCAL_STATIC_JAVA_LIBRARIES)
+    LOCAL_MODULE_CLASS := JAVA_LIBRARIES
+    
+    LOCAL_DROIDDOC_OPTIONS:= \
+    		-api $(TARGET_OUT_COMMON_INTERMEDIATES)/PACKAGING/bouncycastle-api.txt \
+    		-nodocs \
+    		-hidden
+    
+    include $(BUILD_DROIDDOC)
+    endif
+
     # non-jarjar version to build okhttp-tests
     include $(CLEAR_VARS)
     LOCAL_MODULE := bouncycastle-nojarjar
